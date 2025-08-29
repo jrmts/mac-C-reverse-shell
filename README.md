@@ -4,7 +4,7 @@ Develop a C-based reverse shell backdoor for macOS to learn and gain hands-on ex
 ## Modules:
 - main.c: Entry point
 - config.h: Constants (C2 IP, port, retry delay)
-- socket.c/h: TCP connection logic
+- net.c/h: TCP connection logic
 - shell.c/h: Spawning interactive shell
 - utils.c/h: Logging, base64, string manipulation
 - persistence.c/h: LaunchAgent persistence
